@@ -1,0 +1,6 @@
+student_id,overall_attendance_30d,max_absence_streak,num_sudden_drops,variance_30d,weekday_miss_friday
+S001,71,6,0,0.03545,2
+S002,67,5,1,0.19561,0
+S003,68,5,3,0.17888,1
+S004,80,3,2,0.10255,2
+S005,88,5,2,0.17374,3

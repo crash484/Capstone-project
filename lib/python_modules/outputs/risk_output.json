@@ -1,0 +1,47 @@
+[
+    {
+        "student_id": "S001",
+        "risk_level": "Medium",
+        "probabilities": {
+            "High": 0.292,
+            "Low": 0.0,
+            "Medium": 0.708
+        }
+    },
+    {
+        "student_id": "S002",
+        "risk_level": "High",
+        "probabilities": {
+            "High": 0.948,
+            "Low": 0.0,
+            "Medium": 0.052
+        }
+    },
+    {
+        "student_id": "S003",
+        "risk_level": "High",
+        "probabilities": {
+            "High": 0.952,
+            "Low": 0.0,
+            "Medium": 0.048
+        }
+    },
+    {
+        "student_id": "S004",
+        "risk_level": "Medium",
+        "probabilities": {
+            "High": 0.04,
+            "Low": 0.068,
+            "Medium": 0.892
+        }
+    },
+    {
+        "student_id": "S005",
+        "risk_level": "Medium",
+        "probabilities": {
+            "High": 0.096,
+            "Low": 0.02,
+            "Medium": 0.884
+        }
+    }
+]
