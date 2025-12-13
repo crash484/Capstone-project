@@ -2,38 +2,103 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import { TrendingUp, TrendingDown, Users, AlertCircle } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 export function MetricsCards() {
-  const metrics = [
+  const [metrics, setMetrics] = useState(() => [
     {
       label: 'Average Attendance',
-      value: '87.5%',
-      change: '+2.3%',
+      value: '—',
+      change: '',
       isPositive: true,
       icon: Users,
     },
     {
       label: 'Total Students',
-      value: '285',
+      value: '—',
       change: 'Active',
       isPositive: true,
       icon: Users,
     },
     {
       label: 'At Risk Students',
-      value: '23',
-      change: '-1 from last week',
-      isPositive: true,
+      value: '—',
+      change: '',
+      isPositive: false,
       icon: AlertCircle,
     },
     {
       label: 'Prediction Accuracy',
-      value: '94.2%',
-      change: '+3.1%',
+      value: '—',
+      change: '',
       isPositive: true,
       icon: TrendingUp,
     },
-  ]
+  ])
+
+  useEffect(() => {
+    let mounted = true
+
+    const fetchData = async () => {
+      try {
+        // Fetch risk data
+        const riskRes = await fetch('/api/ml/risk')
+        const riskJson = riskRes.ok ? await riskRes.json() : null
+
+        // Fetch pattern data
+        const patternRes = await fetch('/api/ml/patterns')
+        const patternJson = patternRes.ok ? await patternRes.json() : null
+
+        if (!mounted) return
+
+        const riskData = riskJson?.data || []
+        const patternData = patternJson?.data || {}
+
+        const totalStudents = Array.isArray(riskData) ? riskData.length : 0
+        const atRisk = Array.isArray(riskData)
+          ? riskData.filter((r: any) => r.risk_level && r.risk_level.toLowerCase() !== 'low').length
+          : 0
+
+        const avgAttendance = patternData.overall_mean_attendance
+
+        setMetrics([
+          {
+            label: 'Average Attendance',
+            value: avgAttendance ? `${avgAttendance.toFixed(1)}%` : '—',
+            change: '',
+            isPositive: true,
+            icon: Users,
+          },
+          {
+            label: 'Total Students',
+            value: totalStudents.toString(),
+            change: 'Active',
+            isPositive: true,
+            icon: Users,
+          },
+          {
+            label: 'At Risk Students',
+            value: atRisk.toString(),
+            change: '',
+            isPositive: atRisk === 0,
+            icon: AlertCircle,
+          },
+          {
+            label: 'Prediction Accuracy',
+            value: 'N/A',
+            change: '',
+            isPositive: true,
+            icon: TrendingUp,
+          },
+        ])
+      } catch (err) {
+        console.error('Failed to fetch metrics data:', err)
+      }
+    }
+
+    fetchData()
+    return () => { mounted = false }
+  }, [])
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

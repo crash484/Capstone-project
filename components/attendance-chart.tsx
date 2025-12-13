@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Card,
   CardContent,
@@ -8,8 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  LineChart,
-  Line,
   AreaChart,
   Area,
   BarChart,
@@ -22,9 +19,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const data = [
+const demoData = [
   { date: "Jan 1", attendance: 92, predicted: 91 },
   { date: "Jan 2", attendance: 88, predicted: 87 },
   { date: "Jan 3", attendance: 85, predicted: 86 },
@@ -39,6 +36,35 @@ const data = [
 
 export function AttendanceChart() {
   const [chartType, setChartType] = useState<"area" | "line" | "bar">("area");
+  const [chartData, setChartData] = useState<typeof demoData>(demoData);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchForecast = async () => {
+      try {
+        const res = await fetch('/api/ml/forecast');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (!mounted) return;
+
+        if (json?.data && Array.isArray(json.data)) {
+          // eslint-disable-next-line 
+          const mapped = json.data.map((it: any) => ({
+            date: it.date,
+            attendance: it.predicted_attendance,
+            predicted: it.predicted_attendance,
+          }));
+          setChartData(mapped);
+        }
+      } catch (err) {
+        console.error('Error fetching forecast:', err);
+      }
+    };
+
+    fetchForecast();
+    return () => { mounted = false };
+  }, []);
 
   return (
     <Card>
@@ -78,9 +104,9 @@ export function AttendanceChart() {
       <CardContent>
         <div className="w-full h-80">
           <ResponsiveContainer width="100%" height="100%">
-            {chartType === "area" && (
+            {chartType === "area" ? (
               <AreaChart
-                data={data}
+                data={chartData}
                 margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
               >
                 <defs>
@@ -157,51 +183,9 @@ export function AttendanceChart() {
                   name="AI Predicted"
                 />
               </AreaChart>
-            )}
-            {/* {chartType === "line" && (
-              <LineChart
-                data={data}
-                margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
-              >
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="hsl(var(--color-border))"
-                />
-                <XAxis
-                  dataKey="date"
-                  stroke="hsl(var(--color-muted-foreground))"
-                />
-                <YAxis
-                  stroke="hsl(var(--color-muted-foreground))"
-                  domain={[0, 100]}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "hsl(var(--color-card))",
-                    border: "1px solid hsl(var(--color-border))",
-                  }}
-                />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="attendance"
-                  stroke="hsl(var(--color-chart-1))"
-                  name="Actual Attendance"
-                  strokeWidth={2}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="predicted"
-                  stroke="hsl(var(--color-chart-2))"
-                  name="AI Predicted"
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                />
-              </LineChart>
-            )} */}
-            {chartType === "bar" && (
+            ) : (
               <BarChart
-                data={data}
+                data={chartData}
                 margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
               >
                 <CartesianGrid
