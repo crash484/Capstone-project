@@ -1,4 +1,4 @@
-# AttendanceAI
+# AttendSense
 
 AI-powered student attendance analytics and predictions dashboard built with Next.js and Python machine learning models.
 
