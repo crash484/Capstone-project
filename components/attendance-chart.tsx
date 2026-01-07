@@ -202,19 +202,19 @@ export function AttendanceChart() {
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "hsl(var(--color-card))",
+                    backgroundColor: "#000000",
                     border: "1px solid hsl(var(--color-border))",
                   }}
                 />
                 <Legend />
                 <Bar
                   dataKey="attendance"
-                  fill="hsl(var(--color-chart-1))"
+                  fill="#22c55e"
                   name="Actual Attendance"
                 />
                 <Bar
                   dataKey="predicted"
-                  fill="hsl(var(--color-chart-2))"
+                  fill="#3b82f6"
                   name="AI Predicted"
                 />
               </BarChart>
