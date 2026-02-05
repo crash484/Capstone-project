@@ -1,5 +1,9 @@
 import pandas as pd
 import numpy as np
+import sys
+
+file_path = sys.argv[1]
+
 
 class AttendancePatternAnalyzer:
     """
