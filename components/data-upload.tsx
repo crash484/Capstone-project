@@ -13,6 +13,38 @@ export function DataUpload({ onClose }: DataUploadProps) {
   const [isDragging, setIsDragging] = useState(false)
   const [file, setFile] = useState<File | null>(null)
 
+  //function to upload
+  const upload = async ()=>{
+
+    if(!file) return;
+
+    const formData = new FormData();
+    formData.append('file',file);
+
+    try{
+      //sending it to api route
+
+      const response = await fetch(`http://localhost:5000/server/upload`,{
+        method:"POST",
+        body:formData,
+      });
+
+      if (response.ok) {
+        //make sure server return a json
+        const data = await response.json();
+
+        console.log('File upload successfully', data.fileUrl);
+        onClose();
+      }else{
+        console.error('Upload Failed');
+        onClose();
+      }
+    }catch(error){
+      console.error("error uploading file:",error);
+      onClose();
+    };
+  }
+
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragging(true)
@@ -103,6 +135,7 @@ export function DataUpload({ onClose }: DataUploadProps) {
             <Button 
               className="flex-1"
               disabled={!file}
+              onClick={upload}
             >
               Upload & Analyze
             </Button>
