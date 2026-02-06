@@ -1,6 +1,6 @@
 import express  from "express";
 import multer from "multer";
-import { spawn } from "node:child_process"
+// import { spawn } from "node:child_process"
 import fs from "fs";
 import path from "path"
 import { fileURLToPath } from "url";
@@ -35,7 +35,7 @@ app.post("/server/upload", upload,async (req, res) => {
 
         fs.writeFileSync(filePath, file.buffer);
         
-        runPythonPipelines(filePath);
+        // runPythonPipelines(filePath);
 
     res.json({
       message: "file uploaded, processing started",
@@ -48,51 +48,51 @@ app.post("/server/upload", upload,async (req, res) => {
   }
 });
 
-//this is the function to the script
+// //this is the function to the script
 
-function runPython(scriptPath, args=[]){
-    return new Promise((resolve,reject)=>{
-        const python = spawn(
-                  "lib/python_modules/venv/Scripts/python",
-                        [scriptPath, ...args]
-        );
+// function runPython(scriptPath, args=[]){
+//     return new Promise((resolve,reject)=>{
+//         const python = spawn(
+//                   "lib/python_modules/venv/Scripts/python",
+//                         [scriptPath, ...args]
+//         );
 
-        python.stdout.on("data",(data)=>{
-            console.log(`stdOut:${data}`);
-        });
+//         python.stdout.on("data",(data)=>{
+//             console.log(`stdOut:${data}`);
+//         });
 
-        python.stderr.on("data",(data)=>{
-            console.error(`stderr:${data}`);
-        });
+//         python.stderr.on("data",(data)=>{
+//             console.error(`stderr:${data}`);
+//         });
 
-        python.on("close",(code)=>{
-            if(code == 0) resolve();
-            else reject(new Error(`Process exited with code${code}`));
-        });
-    });
-}
+//         python.on("close",(code)=>{
+//             if(code == 0) resolve();
+//             else reject(new Error(`Process exited with code${code}`));
+//         });
+//     });
+// }
 
-//functio to execute each script
-async function runPythonPipelines(filePath) {
-  try {
-    await runPython(
-      "lib/python_modules/src/forecasting/forecaster_train.py",
-      [filePath]
-    );
+// //functio to execute each script
+// async function runPythonPipelines(filePath) {
+//   try {
+//     await runPython(
+//       "lib/python_modules/src/forecasting/forecaster_train.py",
+//       [filePath]
+//     );
 
-    await runPython(
-      "lib/python_modules/src/risk/risk_train.py",
-      [filePath]
-    );
+//     await runPython(
+//       "lib/python_modules/src/risk/risk_train.py",
+//       [filePath]
+//     );
 
-    await runPython(
-      "lib/python_modules/src/patterns/pattern_train.py",
-      [filePath]
-    );
+//     await runPython(
+//       "lib/python_modules/src/patterns/pattern_train.py",
+//       [filePath]
+//     );
 
-    console.log("all models finished");
+//     console.log("all models finished");
 
-  } catch (err) {
-    console.error("python pipeline failed:", err);
-  }
-}
+//   } catch (err) {
+//     console.error("python pipeline failed:", err);
+//   }
+// }
