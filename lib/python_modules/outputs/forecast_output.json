@@ -1,37 +1,37 @@
 [
     {
-        "date": "2025-02-11",
-        "predicted_attendance": 81.26,
+        "date": "1970-01-02",
+        "predicted_attendance": 78.99,
         "confidence": 0.95
     },
     {
-        "date": "2025-02-12",
-        "predicted_attendance": 75.13,
+        "date": "1970-01-03",
+        "predicted_attendance": 86.28,
         "confidence": 0.95
     },
     {
-        "date": "2025-02-13",
-        "predicted_attendance": 74.5,
+        "date": "1970-01-04",
+        "predicted_attendance": 85.66,
         "confidence": 0.95
     },
     {
-        "date": "2025-02-14",
-        "predicted_attendance": 72.08,
+        "date": "1970-01-05",
+        "predicted_attendance": 88.37,
         "confidence": 0.95
     },
     {
-        "date": "2025-02-15",
-        "predicted_attendance": 76.28,
+        "date": "1970-01-06",
+        "predicted_attendance": 86.52,
         "confidence": 0.95
     },
     {
-        "date": "2025-02-16",
-        "predicted_attendance": 77.33,
+        "date": "1970-01-07",
+        "predicted_attendance": 85.31,
         "confidence": 0.95
     },
     {
-        "date": "2025-02-17",
-        "predicted_attendance": 79.65,
+        "date": "1970-01-08",
+        "predicted_attendance": 86.76,
         "confidence": 0.95
     }
 ]

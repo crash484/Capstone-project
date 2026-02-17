@@ -1,50 +1,12 @@
 {
-    "overall_mean_attendance": 74.28571428571429,
+    "overall_mean_attendance": 94.66666666666667,
     "weekday_stats": [
         {
-            "weekday": 0,
-            "mean": 50.0,
-            "std": 14.142135623730951,
-            "count": 2
-        },
-        {
-            "weekday": 1,
-            "mean": 60.0,
-            "std": 28.284271247461902,
-            "count": 2
-        },
-        {
-            "weekday": 2,
-            "mean": 80.0,
-            "std": 0.0,
-            "count": 2
-        },
-        {
             "weekday": 3,
-            "mean": 80.0,
-            "std": 0.0,
-            "count": 2
-        },
-        {
-            "weekday": 4,
-            "mean": 90.0,
-            "std": 14.142135623730951,
-            "count": 2
-        },
-        {
-            "weekday": 5,
-            "mean": 90.0,
-            "std": 14.142135623730951,
-            "count": 2
-        },
-        {
-            "weekday": 6,
-            "mean": 70.0,
-            "std": 14.142135623730951,
-            "count": 2
+            "mean": 94.66666666666667,
+            "std": NaN,
+            "count": 1
         }
     ],
-    "patterns": {
-        "holiday_effect": "Detected clusters of low-attendance days likely due to holidays or events."
-    }
+    "patterns": {}
 }
